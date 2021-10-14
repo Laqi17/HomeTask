@@ -1,5 +1,5 @@
 package hw7;
 
-abstract class Shape {
-    public abstract void getName();
+abstract class Shape implements getName{
+//    public abstract void getName();
 }
