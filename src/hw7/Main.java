@@ -8,10 +8,6 @@ public class Main {
         Shape triangle = new Triangle(5, 12, 45);
         Shape polyhedron =  new Polyhedron(5, 12);
 
-        circle.getName();
-        quad.getName();
-        rectangle.getName();
-        triangle.getName();
-        polyhedron.getName();
+        Util.printName(circle);
     }
 }
