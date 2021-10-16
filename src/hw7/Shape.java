@@ -1,4 +1,5 @@
 package hw7;
 
-abstract class Shape implements getName{
+abstract class Shape{
+    abstract void getName();
 }
