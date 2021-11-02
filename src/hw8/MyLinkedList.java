@@ -37,7 +37,7 @@ public class MyLinkedList<E> {
     }
 
     public void remove(int index) {
-        Node<E> node = get(index);
+        Node<E> node = getNode(index);
         if (node.prev == null) firstNode = node.next;
         else node.prev.next = node.next;
         if (node.next == null) lastNode = node.prev;
@@ -52,7 +52,7 @@ public class MyLinkedList<E> {
         size = 0;
     }
 
-    public Node<E> get(int index) {
+    private Node<E> getNode(int index) {
         Node<E> node = firstNode;
         if (index >= 0 && index <= size) {
             for (int i = 0; i < index; i++) {
@@ -60,6 +60,19 @@ public class MyLinkedList<E> {
             }
         }
         return node;
+    }
+
+    public E get(int index) {
+        Node<E> node = firstNode;
+        if (index >= 0 && index < size) {
+            for (int i = 0; i < index; i++) {
+                node = node.next;
+            }
+        }
+        else {
+            throw new IndexOutOfBoundsException("Index " + index + " out of bounds for length " + size);
+        }
+        return node.element;
     }
 
     @Override
@@ -70,4 +83,5 @@ public class MyLinkedList<E> {
                 ", size=" + size +
                 '}';
     }
+
 }

@@ -1,5 +1,7 @@
 package hw8;
 
+import java.util.ArrayList;
+
 public class MyArrayList<T> {
     private final int DEFAULT_CAPACITY = 10;
     private final int CUT_RATE = 4;
@@ -14,6 +16,8 @@ public class MyArrayList<T> {
     }
 
     public T get(int index) {
+        if (index >= pointer)
+            throw new IndexOutOfBoundsException("Index " + index + " out of bounds for length " + pointer);
         return (T) array[index];
     }
 
@@ -36,4 +40,12 @@ public class MyArrayList<T> {
         System.arraycopy(array, 0, newArray, 0, pointer);
         array = newArray;
     }
+
+    public void clear() {
+        for (int i = 0; i < pointer; i++) {
+            array[i] = null;
+        }
+        pointer = 0;
+    }
+
 }

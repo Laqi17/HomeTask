@@ -80,11 +80,11 @@ public class MyQueue<E> {
         return this.size;
     }
 
-    public MyQueue.Node<E> peek() {
-        return this.first;
+    public E peek() {
+        return this.first.item;
     }
 
-    public MyQueue.Node<E> poll() {
+    public E poll() {
         if (size == 0) {
             return null;
         }
@@ -95,29 +95,14 @@ public class MyQueue<E> {
         if (size == 0) {
             this.last = null;
         }
-        return removable;
+        return removable.item;
     }
 
-    @Override
-    public String toString() {
-        if (size == 0 && this.first == null && this.last == null) {
-            return "[This MyQueue is clear!]";
-        }
-        StringBuilder MyQueueToString = new StringBuilder();
-        MyQueueToString.append("[");
-        MyQueue.Node<E> l = this.first;
-        int count = 0;
-        while (count < size) {
-            if (count == size - 1) {
-                MyQueueToString.append(l);
-                count++;
-            } else {
-                MyQueueToString.append(l).append("; ");
-                l = l.next;
-                count++;
-            }
-        }
-        MyQueueToString.append("]");
-        return new String(MyQueueToString);
+    public static void main(String[] args) {
+        MyQueue<Integer> myQueue = new MyQueue();
+        myQueue.add(1);
+
+        int val = myQueue.poll();
     }
+
 }
