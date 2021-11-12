@@ -1,8 +1,7 @@
 
 
+ name age
 
-name age
-
-alice 21
+ alice 21
 
 ryan 30

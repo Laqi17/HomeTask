@@ -11,7 +11,6 @@ public class Task3 {
     public static void main(String[] args) {
         Map<String, Integer> wordsCount = new HashMap<>();
         List<String> words = new ArrayList<>();
-        List<String> keys = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new FileReader(PATH_TO_FILE))) {
             while (scanner.hasNext()) {
@@ -27,10 +26,18 @@ public class Task3 {
                 wordsCount.put(word, 1);
             }
         }
-        keys.addAll(wordsCount.keySet());
-        for (String key : keys) {
-            System.out.println(key + " " + wordsCount.get(key));
-        }
+
+        Map<String, Integer> sortedWordsCount = sortMap(wordsCount);
+
+        sortedWordsCount.entrySet().forEach(System.out::println);
+
     }
+
+    static Map<String, Integer> sortMap(Map<String, Integer> map) {
+        TreeMap<String, Integer> result = new TreeMap<>(new MyComparator(map));
+        result.putAll(map);
+        return result;
+    }
+
 }
 

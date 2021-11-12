@@ -9,10 +9,19 @@ import java.util.List;
 
 
 public class User {
-    private static final String PATH_TO_FILE_TXT = "src/resources/Task2/file.txt";
-    private static final String PATH_TO_FILE_JSON = "src/resources/Task2/user.json";
     private String name;
     private int age;
+
+    private static final String PATH_TO_FILE_TXT = "src/resources/Task2/file.txt";
+    private static final String PATH_TO_FILE_JSON = "src/resources/Task2/user.json";
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -22,10 +31,12 @@ public class User {
         this.age = age;
     }
 
-    private static void createListFromFile(File file, List<User> users) {
+    public static void createListFromFile(File file, List<User> users) {
+
+
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file))) {
             while (bufferedReader.ready()) {
-                String[] str = bufferedReader.readLine().split(" ");
+                String[] str = bufferedReader.readLine().trim().split(" ");
                 if (str.length > 1 && str[1].matches("[0-9]+")) {
                     User user = new User();
                     user.setName(str[0]);
@@ -33,41 +44,33 @@ public class User {
                     users.add(user);
                 }
             }
+
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
-    }
 
-    private static void checkAndCreateNewFile(File file, File jsonFile) {
-        if (!jsonFile.exists()) {
-            jsonFile.getParentFile().mkdirs();
-            try {
-                file.createNewFile();
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-    }
-
-    private static void writeToJsonFile(String jsonUser, File jsonFile) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(jsonFile))) {
-            bufferedWriter.write(jsonUser);
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
     }
 
     public static void main(String[] args) {
         File file = new File(PATH_TO_FILE_TXT);
         List<User> users = new ArrayList<>();
 
-        createListFromFile(file, users);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        String jsonUser = gson.toJson(users);
+        FileCrietor fileCrietor =  new FileCrietor();
         File jsonFile = new File(PATH_TO_FILE_JSON);
 
-        checkAndCreateNewFile(file, jsonFile);
-        writeToJsonFile(jsonUser, jsonFile);
+        fileCrietor.crieatFile(file, jsonFile);
+        createListFromFile(file, users);
+
+        users.forEach(System.out::println);
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String jsonUser = gson.toJson(users);
+
+        Writer writer = new  Writer();
+        writer.writeToJsonFile(jsonUser, jsonFile);
+
+
 
     }
+
 }
