@@ -2,12 +2,11 @@
   Другой ее поток выводит каждые 5 секунд сообщение  "Прошло 5 секунд". Предусмотрите возможность ежесекундного оповещения потока, воспроизводящего сообщение, потоком, отсчитывающим время.*/
 
 public class Time {
-    private volatile int i = 1;
+    private volatile int i = 0;
     private final Object monitor = new Object();
 
     public static void main(String[] args) throws InterruptedException {
         Time time = new Time();
-
 
         Thread thread1 = new Thread(() -> {
             time.showTime();
@@ -23,33 +22,33 @@ public class Time {
 
     public void showTime() {
         while (true) {
-            try {
-                Thread.sleep(1000);
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
             synchronized (monitor) {
-                System.out.println("Time frome start: " + i++ + " seconds");
-                monitor.notifyAll();;
+                try {
+                    Thread.sleep(1000);
+                    monitor.notifyAll();
+                    i++;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+            System.out.println("Time frome start: " + i + " seconds");
         }
     }
 
     public void showMessage() {
-            while (true) {
-                if (i % 5 == 0) {
-                    System.out.println("Прошло 5 секунд");
-                    synchronized (monitor) {
-                        try {
-                           monitor.wait();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+        while (true) {
+            if (i != 0 && i % 5 == 0) {
+                synchronized (monitor) {
+                    try {
+                        System.out.println("Прошло 5 секунд");
+                        monitor.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
+
             }
+        }
     }
 }
 
