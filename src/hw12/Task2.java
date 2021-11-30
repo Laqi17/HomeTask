@@ -16,33 +16,4 @@ public class Task2 {
     }
 }
 
-class MyRunnable implements Runnable {
 
-    @Repeat(count = 4)
-    @Override
-    public void run() {
-        System.out.println("Hello");
-    }
-}
-
-
-class MyThreadPoolExecutor extends ThreadPoolExecutor {
-
-    public MyThreadPoolExecutor(int corePoolSize) {
-        super(corePoolSize, corePoolSize, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
-    }
-
-    public void execute(@NotNull Runnable command) {
-        for (Method method : command.getClass().getDeclaredMethods()) {
-            if (method.isAnnotationPresent(Repeat.class)) {
-                Repeat repeat = method.getAnnotation(Repeat.class);
-
-                for (int i = 0; i < repeat.count(); i++) {
-                    super.execute(command);
-                }
-
-            }
-        }
-
-    }
-}
