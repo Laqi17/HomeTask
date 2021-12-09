@@ -109,13 +109,13 @@ public class HttpUtil {
         List<hw13.goit.user.Comments> comments = GSON.fromJson(response_comments.body(), new TypeToken<List<Comments>>() {
         }.getType());
 
-        String outJSON = new File("").getAbsolutePath() + "\\user-" + userId + "-post-" + postId + "-comments.json";
+        String outJSON = "src\\hw13\\user-" + userId + "-post-" + postId + "-comments.json";
         File file = new File(outJSON);
 
         checkFile(file);
         writeFile(outJSON, comments);
 
-        System.out.println("New file created? - " + file.exists() + "\nFile path - " +file.getAbsolutePath());
+        System.out.println("New file created? - " + file.exists() + "\nFile path - " +file.getPath());
 
     }
 
